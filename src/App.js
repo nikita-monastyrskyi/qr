@@ -82,7 +82,7 @@ export default class App extends Component {
             <Button
               color="secondary"
               size="medium"
-              style={{marginTop: 10}}
+              style={{marginTop: 10, marginBottom: 20}}
               variant="contained"
               onClick={this.openImageDialog}
             >
