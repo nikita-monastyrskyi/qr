@@ -10,10 +10,11 @@ export default class App extends Component {
   state = {
     result: "No result",
     isOpened: true,
-    facingMode: "environment"
+    facingMode: "environment",
+    legacyMode: false
   };
 
-    qrReader = React.createRef();
+  qrReader = React.createRef();
 
   handleScan = data => {
     if (data) {
@@ -28,33 +29,38 @@ export default class App extends Component {
   };
 
   handleClick = () => {
-    this.setState({ isOpened: !this.state.isOpened });
+    this.setState({ legacyMode: !this.state.legacyMode });
   };
 
   handleChange = e => {
     this.setState({ facingMode: e.target.value });
   };
 
+  handleImageLoad = () => {
+    // this.setState({ legacyMode: false });
+  };
+
   openImageDialog = () => {
     this.qrReader.current.openImageDialog();
-  }
+  };
 
   render() {
     return (
       <div className="grid">
-        {this.state.isOpened && (
-          <>
-            <div className="qr">
-              <QrReader
-                ref={this.qrReader}
-                facingMode={this.state.facingMode}
-                delay={300}
-                onError={this.handleError}
-                onScan={this.handleScan}
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div className="flex">
+        <div className="qr">
+          <QrReader
+            ref={this.qrReader}
+            facingMode={this.state.facingMode}
+            delay={300}
+            onError={this.handleError}
+            onScan={this.handleScan}
+            onImageLoad={this.handleImageLoad}
+            legacyMode={this.state.legacyMode}
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div className="flex">
+          {!this.state.legacyMode && (
             <FormControl
               style={{ marginTop: 10, marginBottom: 20, display: "block" }}
             >
@@ -71,17 +77,20 @@ export default class App extends Component {
                 <MenuItem value={"user"}>Front-facing camera</MenuItem>
               </Select>
             </FormControl>
-              <Button
-                  color="secondary"
-                  size="small"
-                  variant="contained"
-                  onClick={this.openImageDialog}
-              >
-                 Download image
-              </Button>
-            </div>
-          </>
-        )}
+          )}
+          {this.state.legacyMode && (
+            <Button
+              color="secondary"
+              size="medium"
+              style={{marginTop: 10}}
+              variant="contained"
+              onClick={this.openImageDialog}
+            >
+              Download image
+            </Button>
+          )}
+        </div>
+
         {this.state.isOpened && <p className="result">{this.state.result}</p>}
         <Button
           color="primary"
@@ -90,7 +99,7 @@ export default class App extends Component {
           variant="contained"
           onClick={this.handleClick}
         >
-          {this.state.isOpened ? "Close scanner" : "Scan"}
+          {this.state.legacyMode ? "Inline mode" : "Download mode"}
         </Button>
       </div>
     );
