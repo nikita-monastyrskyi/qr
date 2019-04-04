@@ -99,7 +99,7 @@ export default class App extends Component {
           variant="contained"
           onClick={this.handleClick}
         >
-          {this.state.legacyMode ? "Inline mode" : "Download mode"}
+          Open {this.state.legacyMode ? "Inline mode" : "Download mode"}
         </Button>
       </div>
     );
