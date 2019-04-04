@@ -31,3 +31,23 @@
     transform: rotate(360deg);
   }
 }
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+}
+
+.qr {
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  max-height: 400px;
+}
+
+.result {
+  margin-top: 10px;
+  display: block;
+}
+
