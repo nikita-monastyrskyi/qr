@@ -40,7 +40,7 @@ export default class App extends Component {
           <>
             <div className="qr">
               <QrReader
-                // facingMode={this.state.facingMode}
+                facingMode={this.state.facingMode}
                 delay={300}
                 onError={this.handleError}
                 onScan={this.handleScan}
