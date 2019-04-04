@@ -13,6 +13,8 @@ export default class App extends Component {
     facingMode: "environment"
   };
 
+    qrReader = React.createRef();
+
   handleScan = data => {
     if (data) {
       this.setState({
@@ -33,6 +35,10 @@ export default class App extends Component {
     this.setState({ facingMode: e.target.value });
   };
 
+  openImageDialog = () => {
+    this.qrReader.current.openImageDialog();
+  }
+
   render() {
     return (
       <div className="grid">
@@ -40,17 +46,22 @@ export default class App extends Component {
           <>
             <div className="qr">
               <QrReader
+                ref={this.qrReader}
                 facingMode={this.state.facingMode}
                 delay={300}
+                legacyMode
                 onError={this.handleError}
                 onScan={this.handleScan}
                 style={{ width: "100%" }}
               />
             </div>
-            <FormControl style={{ marginTop: 10, marginBottom: 20, display: "block" }}>
+            <div className="flex">
+            <FormControl
+              style={{ marginTop: 10, marginBottom: 20, display: "block" }}
+            >
               <Select
                 value={this.state.facingMode}
-                style={{width: 200}}
+                style={{ width: 180 }}
                 onChange={this.handleChange}
                 inputProps={{
                   name: "age",
@@ -61,6 +72,15 @@ export default class App extends Component {
                 <MenuItem value={"user"}>Front-facing camera</MenuItem>
               </Select>
             </FormControl>
+              <Button
+                  color="secondary"
+                  size="small"
+                  variant="contained"
+                  onClick={this.openImageDialog}
+              >
+                 Download image
+              </Button>
+            </div>
           </>
         )}
         {this.state.isOpened && <p className="result">{this.state.result}</p>}
