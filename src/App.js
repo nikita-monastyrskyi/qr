@@ -49,7 +49,6 @@ export default class App extends Component {
                 ref={this.qrReader}
                 facingMode={this.state.facingMode}
                 delay={300}
-                legacyMode
                 onError={this.handleError}
                 onScan={this.handleScan}
                 style={{ width: "100%" }}
